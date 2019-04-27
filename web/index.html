@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+  <title>Firebase Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div id="login_div" class="main-div">
+    <h3>CancerApp Login</h3>
+    <input type="email" placeholder="Email..." id="email_field" />
+    <input type="password" placeholder="Password..." id="password_field" />
+
+    <button onclick="login()">Login to Account</button>
+  </div>
+
+  <div id="user_div" class="loggedin-div">
+    <h3>Bienvenido</h3>
+    <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+    <button onclick="logout()">Logout</button>
+	<select name="sometext" multiple="multiple">
+ 
+ </select>
+  </div>
+
+
+
+  
+<script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBje_8i495uHrmJE3e95mLEsvh9hdgFF_Y",
+    authDomain: "cancerapp-79383.firebaseapp.com",
+    databaseURL: "https://cancerapp-79383.firebaseio.com",
+    projectId: "cancerapp-79383",
+    storageBucket: "cancerapp-79383.appspot.com",
+    messagingSenderId: "644286998392"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script src="js/index.js"></script>
+  
+  
+<script>
+var database = firebase.database();
+for(element in langArray)
+{
+   var opt = document.createElement("option");
+   opt.value= index;
+   opt.innerHTML = element; // whatever property it has
+
+   // then append it to the select element
+   sometext.appendChild(opt);
+   index++;
+}
+
+</script>
+</body>
+</html>
