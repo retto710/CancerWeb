@@ -360,8 +360,8 @@
             }
           ],
           labels: [
-            'Products',
-            'Services'
+            'No',
+            'Si'
           ]
         },
         options: {
@@ -649,8 +649,8 @@
             }
           ],
           labels: [
-            'Products',
-            'Services'
+            'No',
+            'Si'
           ]
         },
         options: {
