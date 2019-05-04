@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+    
+    <title>Resultado de Probabilidad</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+</head>
+<body onLoad="myOnLoad()">
+    <header class="header">
+        <div class="head">
+            <h1>Derma App</h1> 
+            <img src="" alt="Logo">
+        </div>
+        <nav class="flex navbar">
+            <a href="#">Recents</a>
+            <a href="#">Diagnosticoes</a>
+        </nav>
+    </header>
+    <main class="main">
+        <div class="mainmenu">
+            <div class="flex">
+                <h2>Recents</h2>
+                <form action="">
+                    <input type="text" name="search" placeholder="Diagnosticoes">
+                </form>
+                <button>
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>                 
+            </div>
+            <p class="add">+AGREGAR</p>
+        </div>
+        <div class="container">
+            <ul>
+                <li>
+                    <p class="ask">DNI</p>
+                    <select name="dni" id="dni" class="answer">
+                        <option value="12345600">12345600</option>
+                        <option value="12345699">12345699</option>
+                    </select>
+                     <button onclick="load()">Buscar</button>
+                </li>
+                <li>
+                    <p class="ask">Nombres</p>
+                    <p class="answer" id="nombre">Jonathan</p>
+                </li>
+                <li>
+                    <p class="ask">A Paterno</p>
+                    <p class="answer" id="ap_paterno">Campos</p>
+                </li>
+                
+                
+                <li>
+                    <p class="ask">A Materno</p>
+                    <p class="answer" id="ap_materno">Poma</p>
+                </li>
+                <li>
+                    <div class="ask">
+                        <p>Foto</p>
+                        <p class="" id="porcentaje">75%</p>                 
+                    </div>
+                    <div class="answer">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/cancerapp-79383.appspot.com/o/images%2F1555452584983.jpg?alt=media&token=de9eeb5a-480c-409e-b1de-e280365a6158" id="foto" alt="foto" class="fotopiel">    
+                    </div>    
+                </li>
+                <li>
+                     <p class="ask">Diagnostico</p>
+                     <p> <textarea  rows="4" cols="50" id="diagnostico" ></textarea><br></p>    
+                </li>
+                <li>
+                     <p class="ask">Tratamiento</p>
+                     <p> <textarea  rows="4" cols="50" id="tratamiento" ></textarea><br></p>    
+                </li>
+                <li>
+                     <button onclick="save()">Guardar</button>
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+<script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+
+
+<script>
+
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBje_8i495uHrmJE3e95mLEsvh9hdgFF_Y",
+            authDomain: "cancerapp-79383.firebaseapp.com",
+            databaseURL: "https://cancerapp-79383.firebaseio.com",
+            projectId: "cancerapp-79383",
+            storageBucket: "cancerapp-79383.appspot.com",
+            messagingSenderId: "644286998392"
+        };
+        firebase.initializeApp(config);
+        const db = firebase.firestore();
+        db.settings(
+            { 
+                timestampsInSnapshots: true
+            }
+        ); 
+        </script>
+
+<script>   // Initialize Firebase
+
+     function load() {
+         var e = document.getElementById("dni");
+         var strUser = e.options[e.selectedIndex].value;
+         // getting data
+        db.collection('pacientes').where('dni','==',strUser).get().then(snapshot => {
+            snapshot.docs.forEach(doc => {
+                 let li = document.getElementById('nombre');
+                 li.innerHTML=doc.data().nombre;
+                 let lo = document.getElementById('ap_paterno');
+                 lo.innerHTML=doc.data().apPat;
+                 let lu = document.getElementById('ap_materno');
+                 lu.innerHTML=doc.data().apMat;
+                 var url ;
+                 let la = document.getElementById('foto');
+                 url=doc.data().url;
+                 la.src=url;
+                 let le = document.getElementById('porcentaje');
+                 le.innerHTML = doc.data().Melanoma;
+                 let laa = document.getElementById('diagnostico');
+                 laa.value = doc.data().diagnostico;
+                 let lea = document.getElementById('tratamiento');
+                 lea.value=doc.data().tratamiento;
+                 
+                 //la.src=url;
+            });
+        });
+     }
+</script>
+
+<<script>
+    function save() {
+     var e = document.getElementById("dni");
+         var strUser = e.options[e.selectedIndex].value;
+    let diag = document.getElementById('diagnostico');
+    let trat = document.getElementById('tratamiento');
+  
+    var paciente = db.collection('pacientes').doc(strUser);
+    paciente.update(
+            {
+                diagnostico: diag.value,
+                tratamiento: trat.value,
+            }
+            )
+    alert("Diagnostico Guardado");
+    }
+    
+</script>
+</html>
