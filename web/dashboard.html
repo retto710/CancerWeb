@@ -8,7 +8,8 @@
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
-
+ <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
     <!-- Title Page-->
     <title>Dashboard</title>
 
@@ -35,7 +36,7 @@
 
 </head>
 
-<body class="animsition">
+<body class="animsition" onLoad="load2()">
     <div class="page-wrapper">
          <!-- PAGE CONTAINER-->
         <div class="page-container">
@@ -123,8 +124,8 @@
                                             <div class="icon">
                                                 <i class="zmdi zmdi-account-o"></i>
                                             </div>
-                                            <div class="text">
-                                                <h2>10368</h2>
+                                            <div class="text" id ="Num_pacientes">
+                                                <h2 id="h2_num" >0</h2>
                                                 <span>Numero de pacientes</span>
                                             </div>
                                         </div>
@@ -210,30 +211,12 @@
                                                 <th>dni</th>
                                                 <th>nombre</th>
                                                 <th>A. Paterno</th>
-                                                <th>A. Materno</th>
-                                                <th>Foto</th>
-                                                <th>Diagnostico</th>
-                                                <th>Recomendacion</th>
-                                                <th>Modificar</th>
-                                                <th>Eliminar</th>
+                                              
                                                 <th>Ver</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>100398</td>
-                                                <td>Jose </td>
-                                                <td>Jose </td>
-                                                <td>Jose </td>
-                                                <td>Jose </td>
-                                                <td>Jose </td>
-                                                <td>Jose </td>
-                                                <td>Jose </td>
-                                                <td>Jose </td>
-                                                <td><button onclick="login()"> Ver</button></td>
-                
-                                            </tr>
+                                        <tbody id="tabla_paciente">
+                                       
                                           
                                         </tbody>
                                     </table>
@@ -285,35 +268,72 @@ function login(){
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
-     <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBje_8i495uHrmJE3e95mLEsvh9hdgFF_Y",
-    authDomain: "cancerapp-79383.firebaseapp.com",
-    databaseURL: "https://cancerapp-79383.firebaseio.com",
-    projectId: "cancerapp-79383",
-    storageBucket: "cancerapp-79383.appspot.com",
-    messagingSenderId: "644286998392"
-  };
-  firebase.initializeApp(config);
-</script>
+ <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
 
 
-  
-  
 <script>
-var database = firebase.database();
-for(element in langArray)
-{
-   var opt = document.createElement("option");
-   opt.value= index;
-   opt.innerHTML = element; // whatever property it has
 
-   // then append it to the select element
-   sometext.appendChild(opt);
-   index++;
-}
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBje_8i495uHrmJE3e95mLEsvh9hdgFF_Y",
+            authDomain: "cancerapp-79383.firebaseapp.com",
+            databaseURL: "https://cancerapp-79383.firebaseio.com",
+            projectId: "cancerapp-79383",
+            storageBucket: "cancerapp-79383.appspot.com",
+            messagingSenderId: "644286998392"
+        };
+        firebase.initializeApp(config);
+        const db = firebase.firestore();
+        db.settings(
+            { 
+                timestampsInSnapshots: true
+            }
+        ); 
+        </script>
 
+        <script>   // Initialize Firebase
+
+     function load2() {
+        
+         var e = document.getElementById("tabla_paciente");
+          
+        let count = 0;
+        
+         // getting data
+        db.collection('pacientes').get().then(snapshot => {
+            snapshot.docs.forEach(doc => {
+                count=count+1;
+                 let tr = document.createElement('tr');
+                 var button2 = document.createElement('button');    
+                  button2.onclick=login;
+                  button2.innerHTML="Ver";
+                 let fecha = document.createElement('td');
+                 let dni = document.createElement('td');
+                 let nombre = document.createElement('td');
+                 let apePat = document.createElement('td');
+                 let ver = document.createElement('td');
+                 fecha.innerHTML= "2018-09-29 05:57"
+                 dni.innerHTML = doc.data().dni;
+                 nombre.innerHTML = doc.data().nombre;
+                 apePat.innerHTML = doc.data().apPat;
+                 ver.appendChild(button2);
+                 
+                
+                 tr.appendChild(fecha);
+                 tr.appendChild(dni);
+                 tr.appendChild(nombre);
+                 tr.appendChild(apePat);
+                 tr.appendChild(ver);
+                 e.appendChild(tr);
+                 
+            });
+        });
+        var f = document.getElementById("Num_pacientes");
+       
+        var h2 = document.getElementById("h2_num");
+        h2.innerHTML="" +count.toString();
+        h2.innerHTML="3";
+     }
 </script>
 
 </body>
