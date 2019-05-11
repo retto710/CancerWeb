@@ -303,6 +303,7 @@ function login(){
         db.collection('pacientes').get().then(snapshot => {
             snapshot.docs.forEach(doc => {
                 count=count+1;
+                
                  let tr = document.createElement('tr');
                  var button2 = document.createElement('button');    
                   button2.onclick=login;
@@ -325,17 +326,25 @@ function login(){
                  tr.appendChild(apePat);
                  tr.appendChild(ver);
                  e.appendChild(tr);
-                 
+                  var h2 = document.getElementById("h2_num");
+                    
+                    h2.innerHTML="" +count;
             });
         });
-        var f = document.getElementById("Num_pacientes");
        
-        var h2 = document.getElementById("h2_num");
-        h2.innerHTML="" +count.toString();
-        h2.innerHTML="3";
+       
+        
      }
 </script>
-
+<script>
+    function logout(){
+  
+  
+   firebase.auth().signOut();
+     window.open('index.html','_self',false)
+}
+    
+</script>
 </body>
 
 </html>

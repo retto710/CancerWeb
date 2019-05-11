@@ -151,7 +151,7 @@ firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(functi
                     clave: _clave
                 };
                     
-               var derm= db.collection("dermatologos").doc(_email).set({
+               db.collection("dermatologos").doc(_email).set({
                     cmp: _cmp,
                     nombre: _nombres,
                     apellidos: _apelllidos,
@@ -160,7 +160,7 @@ firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(functi
                     email: _email,
                     clave: _clave
                 });
-               alert(derm.values(email));
+               
             window.open('index.html','_self',false)
 }
 </script>
