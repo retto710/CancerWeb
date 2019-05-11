@@ -14,8 +14,9 @@ and open the template in the editor.
     <title>Resultado de Probabilidad</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/circle.css">
 </head>
-<body onLoad="myOnLoad()">
+<body onLoad="load2()">
     <header class="header">
         <div class="head">
             <h1>Derma App</h1> 
@@ -44,8 +45,8 @@ and open the template in the editor.
                 <li>
                     <p class="ask">DNI</p>
                     <select name="dni" id="dni" class="answer">
-                        <option value="12345600">12345600</option>
-                        <option value="12345699">12345699</option>
+                        
+                      
                     </select>
                      <button onclick="load()">Buscar</button>
                 </li>
@@ -66,11 +67,24 @@ and open the template in the editor.
                 <li>
                     <div class="ask">
                         <p>Foto</p>
-                        <p class="" id="porcentaje">75%</p>                 
+                        <p class="" id="porcentaje2">75%</p>                 
                     </div>
                     <div class="answer">
                         <img src="https://firebasestorage.googleapis.com/v0/b/cancerapp-79383.appspot.com/o/images%2F1555452584983.jpg?alt=media&token=de9eeb5a-480c-409e-b1de-e280365a6158" id="foto" alt="foto" class="fotopiel">    
                     </div>    
+                </li>
+                <li>
+                     <p class="ask">Porcentaje</p>
+                     <div class="clearfix">
+                      <div class="c100 p0" id="circlePerc">
+                    <span id="porcentaje">25%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                    </div>
+                </div>
+                      
                 </li>
                 <li>
                      <p class="ask">Diagnostico</p>
@@ -110,6 +124,25 @@ and open the template in the editor.
         ); 
         </script>
 
+        <script>   // Initialize Firebase
+
+     function load2() {
+        
+         var e = document.getElementById("dni");
+         
+         // getting data
+        db.collection('pacientes').get().then(snapshot => {
+            snapshot.docs.forEach(doc => {
+                 let li = document.createElement('option');
+                 li.value = doc.data().dni;
+                 li.innerHTML = doc.data().dni;
+                 e.appendChild(li);
+                 
+            });
+        });
+      
+     }
+</script>
 <script>   // Initialize Firebase
 
      function load() {
@@ -129,11 +162,29 @@ and open the template in the editor.
                  url=doc.data().url;
                  la.src=url;
                  let le = document.getElementById('porcentaje');
-                 le.innerHTML = doc.data().Melanoma;
+                 var porcentaje=doc.data().Melanoma;
+                 le.innerHTML = parseInt(parseFloat(porcentaje)*100)+"%";
                  let laa = document.getElementById('diagnostico');
                  laa.value = doc.data().diagnostico;
                  let lea = document.getElementById('tratamiento');
                  lea.value=doc.data().tratamiento;
+                 let circle = document.getElementById('circlePerc');
+                 var perce=parseInt(parseFloat(porcentaje)*100);
+                
+                 if (parseInt(perce)<30) {
+                      
+                     circle.className="c100 p"+perce+" green";  
+                }
+                else if(parseInt(perce)<60)
+                {
+                    
+                        circle.className="c100 p"+perce;
+                }
+                else
+                {
+                     
+                    circle.className="c100 p"+perce+" orange";
+                    }
                  
                  //la.src=url;
             });

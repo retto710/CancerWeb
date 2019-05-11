@@ -11,9 +11,9 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="css/estilosRegistro.css" rel="stylesheet" media="all">
         
-        <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
-        
+         <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+    
         
     </head>
     <body>
@@ -94,18 +94,24 @@ and open the template in the editor.
         </div>
 <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBje_8i495uHrmJE3e95mLEsvh9hdgFF_Y",
-    authDomain: "cancerapp-79383.firebaseapp.com",
-    databaseURL: "https://cancerapp-79383.firebaseio.com",
-    projectId: "cancerapp-79383",
-    storageBucket: "cancerapp-79383.appspot.com",
-    messagingSenderId: "644286998392"
-  };
-  var app=firebase.initializeApp(config);
-  const db = firebase.firestore(app);
-</script>
+
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBje_8i495uHrmJE3e95mLEsvh9hdgFF_Y",
+            authDomain: "cancerapp-79383.firebaseapp.com",
+            databaseURL: "https://cancerapp-79383.firebaseio.com",
+            projectId: "cancerapp-79383",
+            storageBucket: "cancerapp-79383.appspot.com",
+            messagingSenderId: "644286998392"
+        };
+        firebase.initializeApp(config);
+        const db = firebase.firestore();
+        db.settings(
+            { 
+                timestampsInSnapshots: true
+            }
+        ); 
+        </script>
 
 <script>   // Initialize Firebase
 
@@ -113,7 +119,8 @@ and open the template in the editor.
 //Registrar correo
   var userEmail = document.getElementById("txtEmail").value;
   var userPass = document.getElementById("txtClave").value;
-  
+
+
 firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
@@ -122,16 +129,16 @@ firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(functi
 });
 //Registar dermatologo
 
-                var _cmp = document.getElementById("txtCMP").value;
+                var _cmp = document.getElementById('txtCMP').value;
                 
-                var _nombres = document.getElementById("txtNombres").value;
-                var _apelllidos = document.getElementById("txtApellidos").value;
-                var _hospital = document.getElementById("txtHospital").value;
-                var _telefono = document.getElementById("txtTeléfono").value;
+                var _nombres = document.getElementById('txtNombres').value;
+                var _apelllidos = document.getElementById('txtApellidos').value;
+                var _hospital = document.getElementById('txtHospital').value;
+                var _telefono = document.getElementById('txtTeléfono').value;
                
-                var _email = document.getElementById("txtEmail").value;
-                
-                var _clave = document.getElementById("txtClave").value;
+                var _email = document.getElementById('txtEmail').value;
+                 
+                var _clave = document.getElementById('txtClave').value;
                
    
                 var data = {
@@ -143,8 +150,17 @@ firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(functi
                     email: _email,
                     clave: _clave
                 };
-                 firebase.firestore().enableNetwork();
-                firebase.firestore().collection("dermatologos").doc(_email).set(data);
+                    
+               var derm= db.collection("dermatologos").doc(_email).set({
+                    cmp: _cmp,
+                    nombre: _nombres,
+                    apellidos: _apelllidos,
+                    hospital: _hospital,
+                    telefono: _telefono,
+                    email: _email,
+                    clave: _clave
+                });
+               alert(derm.values(email));
             window.open('index.html','_self',false)
 }
 </script>
