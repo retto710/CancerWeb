@@ -9,12 +9,10 @@ and open the template in the editor.
         <title>Derma App</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="css/estilosRegistro.css" rel="stylesheet" media="all">
-        
-         <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
-    
-        
+        <link href="css/estilosRegistro.css" rel="stylesheet" media="all">
+
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
     </head>
     <body>
         <header class="main-header">
@@ -32,50 +30,50 @@ and open the template in the editor.
                             <div class="form-row">
                                 <div class="name">CMP</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="text" id="txtCMP" name="txtCMP"/>
+                                    <input class="input--style-6" type="text" id="txtCMP" name="txtCMP" required=""/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="name">Nombres</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="text" id="txtNombres" name="txtNombres"/>
+                                    <input class="input--style-6" type="text" id="txtNombres" name="txtNombres" required=""/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="name">Apellidos</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="text" id="txtApellidos" name="txtApellidos"/>
+                                    <input class="input--style-6" type="text" id="txtApellidos" name="txtApellidos" required=""/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="name">Hospital</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="text" id="txtHospital" name="txtHospital"/>
+                                    <input class="input--style-6" type="text" id="txtHospital" name="txtHospital" required=""/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="name">Teléfono</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="text" id="txtTeléfono" name="txtTeléfono"/>
+                                    <input class="input--style-6" type="text" id="txtTeléfono" name="txtTeléfono" required=""/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="name">Email</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="email" id="txtEmail" name="txtEmail" placeholder="example@email.com">
+                                    <input class="input--style-6" type="email" id="txtEmail" name="txtEmail" placeholder="example@email.com" required="">
                                 </div>
                             </div>
                               
                             <div class="form-row">
                                 <div class="name">Clave</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="password" id="txtClave" name="txtClave"/>
+                                    <input class="input--style-6" type="password" id="txtClave" name="txtClave"  pattern=".{6,}" required title="Mínimo 6 caracteres"/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="name">Repetir Clave</div>
                                 <div class="value">
-                                    <input class="input--style-6" type="password" id="txtRepetirClave" name="txtRepetirClave"/>
+                                    <input class="input--style-6" type="password" id="txtRepetirClave" name="txtRepetirClave" required=""/>
                                 </div>
                             </div>
                         </form>
@@ -92,8 +90,8 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-<script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
-<script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+    <script>
 
         // Initialize Firebase
         var config = {
@@ -111,59 +109,43 @@ and open the template in the editor.
                 timestampsInSnapshots: true
             }
         ); 
-        </script>
+    </script>
 
-<script>   // Initialize Firebase
-
-    function register(){
-//Registrar correo
-  var userEmail = document.getElementById("txtEmail").value;
-  var userPass = document.getElementById("txtClave").value;
-
-
-firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // ...
-});
-//Registar dermatologo
-
-                var _cmp = document.getElementById('txtCMP').value;
-                
-                var _nombres = document.getElementById('txtNombres').value;
-                var _apelllidos = document.getElementById('txtApellidos').value;
-                var _hospital = document.getElementById('txtHospital').value;
-                var _telefono = document.getElementById('txtTeléfono').value;
-               
-                var _email = document.getElementById('txtEmail').value;
-                 
-                var _clave = document.getElementById('txtClave').value;
-               
-   
-                var data = {
-                    cmp: _cmp,
-                    nombre: _nombres,
-                    apellidos: _apelllidos,
-                    hospital: _hospital,
-                    telefono: _telefono,
-                    email: _email,
-                    clave: _clave
-                };
-                    
-               db.collection("dermatologos").doc(_email).set({
-                    cmp: _cmp,
-                    nombre: _nombres,
-                    apellidos: _apelllidos,
-                    hospital: _hospital,
-                    telefono: _telefono,
-                    email: _email,
-                    clave: _clave
-                });
-               
-            window.open('index.html','_self',false)
-}
-</script>
-
+    <script>   
+        // Initialize Firebase   
+        function register(){
+            //Registar dermatologo
+            var _cmp = document.getElementById('txtCMP').value;
+            var _nombres = document.getElementById('txtNombres').value;
+            var _apelllidos = document.getElementById('txtApellidos').value;
+            var _hospital = document.getElementById('txtHospital').value;
+            var _telefono = document.getElementById('txtTeléfono').value;
+            var _email = document.getElementById('txtEmail').value;
+            var _clave = document.getElementById('txtClave').value;
+            
+            //Registrar correo
+            firebase.auth().createUserWithEmailAndPassword(_email, _clave).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert("Error: " + errorMessage);
+                // ...
+            });
+            
+            var derm = db.collection("dermatologos").doc(_email).set({
+                 cmp: _cmp,
+                 nombre: _nombres,
+                 apellidos: _apelllidos,
+                 hospital: _hospital,
+                 telefono: _telefono,
+                 email: _email,
+                 clave: _clave
+            });
+            window.setTimeout(function(){
+                window.location.href = 'index.html';
+            },1000);
+        }
+    </script>
     </body>
 </html>
+    

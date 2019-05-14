@@ -209,9 +209,9 @@
                                             <tr>
                                                 <th>Fecha</th>
                                                 <th>dni</th>
-                                                <th>nombre</th>
-                                                <th>A. Paterno</th>
-                                              
+                                                <th>Tipo Sangre</th>
+                                                <th>Familia con Cancer</th>
+                                                <th>Genero</th>
                                                 <th>Ver</th>
                                             </tr>
                                         </thead>
@@ -312,11 +312,14 @@ function login(){
                  let dni = document.createElement('td');
                  let nombre = document.createElement('td');
                  let apePat = document.createElement('td');
+                 let altura = document.createElement('td');
                  let ver = document.createElement('td');
-                 fecha.innerHTML= "2018-09-29 05:57"
+                 fecha.innerHTML= "2018-09-29 05:57";
                  dni.innerHTML = doc.data().dni;
-                 nombre.innerHTML = doc.data().nombre;
-                 apePat.innerHTML = doc.data().apPat;
+                 nombre.innerHTML = doc.data().sangre;
+                 altura.innerHTML = doc.data().gen;
+                 apePat.innerHTML = doc.data().familiaCancer;
+                 
                  ver.appendChild(button2);
                  
                 
@@ -324,7 +327,9 @@ function login(){
                  tr.appendChild(dni);
                  tr.appendChild(nombre);
                  tr.appendChild(apePat);
+                 tr.appendChild(altura);
                  tr.appendChild(ver);
+                 
                  e.appendChild(tr);
                   var h2 = document.getElementById("h2_num");
                     
